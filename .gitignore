@@ -1,6 +1,8 @@
 *.o
 *.exe
 *.dSYM/
+*.a
+*.zip
 
 CMakeCache.txt
 CMakeFiles/

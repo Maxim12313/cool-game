@@ -12,9 +12,15 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action,
                  int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
-        printf("inside\n");
     }
-    printf("happened\n");
+}
+
+void update() {
+}
+
+void draw() {
+    glClearColor(0.2, 0.2, 1, 1);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 int main() {
@@ -34,10 +40,23 @@ int main() {
 
     glfwMakeContextCurrent(window);
     gladLoadGL();
+
     glfwSetKeyCallback(window, keyCallback);
+
+    glfwSwapInterval(1);
+    double time = glfwGetTime();
+
     while (!glfwWindowShouldClose(window)) {
-        // glfwPollEvents();
+        int width, height;
+        glfwGetFramebufferSize(window, &width, &height);
+        glViewport(0, 0, width, height);
+
+        update();
+
+        draw();
+
         glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 
     glfwDestroyWindow(window);

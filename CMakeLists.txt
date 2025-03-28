@@ -9,17 +9,14 @@ include_directories(include)
 file(GLOB SOURCE_FILES "src/*.cpp")
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 
-
 add_executable(app.exe src/main.cpp ${SOURCE_FILES})
 add_executable(game_tests.exe tests/main.cpp ${SOURCE_FILES})
 
-find_package(glfw3 3.3 REQUIRED)
-target_link_libraries(app.exe PRIVATE glfw)
-target_link_libraries(game_tests.exe PRIVATE glfw)
+find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
+find_package(SDL2 REQUIRED CONFIG COMPONENTS SDL2main)
 
-add_library(glad STATIC include/glad/glad.h src/glad.c)
-target_link_libraries(app.exe PRIVATE glad)
-target_link_libraries(game_tests.exe PRIVATE glad)
-
+# Link to the actual SDL2 library. SDL2::SDL2 is the shared SDL library, SDL2::SDL2-static is the static SDL libarary.
+target_link_libraries(app.exe PRIVATE SDL2::SDL2)
+target_link_libraries(game_tests.exe PRIVATE SDL2::SDL2)
 
 

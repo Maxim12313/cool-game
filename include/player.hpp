@@ -1,21 +1,19 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
+#include "game_block.hpp"
 #include "structs.hpp"
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_render.h>
 
-class Player {
+class Player : public GameBlock {
 public:
-    Player(int size, int speed, SDL_Renderer *renderer, Color color);
-    void draw();
-    void update();
+    Player(int width, int height, int speed, SDL_Renderer *renderer,
+           Color color);
+
+    void update() override;
 
 private:
-    int size;
     int speed;
-    Color color;
-    SDL_Renderer *renderer;
-    SDL_Rect rect;
 };
 
 #endif

@@ -9,6 +9,8 @@ include_directories(include)
 file(GLOB SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 
+message(STATUS "Source files: ${SOURCE_FILES}")
+
 
 add_executable(app.exe src/main.cpp ${SOURCE_FILES})
 add_executable(game_tests.exe tests/main.cpp ${SOURCE_FILES})

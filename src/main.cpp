@@ -2,8 +2,26 @@
 #include "../include/player.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_render.h>
 #include <SDL2/SDL_scancode.h>
 #include <iostream>
+#include <ranges>
+
+void cleanup(SDL_Renderer *renderer, SDL_Window *window) {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
+void setBackground(SDL_Renderer *renderer) {
+    SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
+    SDL_RenderClear(renderer);
+}
+
+void renderScreen(SDL_Renderer *renderer) {
+    SDL_RenderPresent(renderer);
+    SDL_Delay(Config::fpsDelay);
+}
 
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -32,7 +50,7 @@ int main() {
         return 1;
     }
 
-    Player player(50, 10, renderer, Color(255, 0, 0, 255));
+    Player player(20, 20, 10, renderer, Color(255, 0, 0, 255));
 
     bool running = true;
     SDL_Event event;
@@ -49,26 +67,13 @@ int main() {
             }
         }
 
-        // Keyboard state
-
-        // clear screen
-        SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
-        SDL_RenderClear(renderer);
-
         player.update();
+
+        setBackground(renderer);
         player.draw();
 
-        // present renderer
-        SDL_RenderPresent(renderer);
-
-        // delay for frame rate control
-        SDL_Delay(16);
+        renderScreen(renderer);
     }
-
-    // cleanup
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-
+    cleanup(renderer, window);
     return 0;
 }

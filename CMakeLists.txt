@@ -6,8 +6,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 include_directories(include)
 
 # all cpp files in src excluding main
-file(GLOB SOURCE_FILES "src/*.cpp")
+file(GLOB SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
+
 
 add_executable(app.exe src/main.cpp ${SOURCE_FILES})
 add_executable(game_tests.exe tests/main.cpp ${SOURCE_FILES})

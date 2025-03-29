@@ -1,12 +1,9 @@
+#include "../include/config.hpp"
+#include "../include/player.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_scancode.h>
 #include <iostream>
-
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-const int RECT_SIZE = 50;
-const int SPEED = 5;
 
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -17,7 +14,7 @@ int main() {
 
     SDL_Window *window = SDL_CreateWindow(
         "SDL2 Game Loop", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        Config::windowWidth, Config::windowHeight, SDL_WINDOW_SHOWN);
     if (!window) {
         std::cerr << "Window could not be created! SDL_Error: "
                   << SDL_GetError() << std::endl;
@@ -35,9 +32,7 @@ int main() {
         return 1;
     }
 
-    // position
-    SDL_Rect rect = {SCREEN_WIDTH / 2 - RECT_SIZE / 2,
-                     SCREEN_HEIGHT / 2 - RECT_SIZE / 2, RECT_SIZE, RECT_SIZE};
+    Player player(50, 10, renderer, Color(255, 0, 0, 255));
 
     bool running = true;
     SDL_Event event;
@@ -55,25 +50,13 @@ int main() {
         }
 
         // Keyboard state
-        const Uint8 *keystate = SDL_GetKeyboardState(NULL);
-        if (keystate[SDL_SCANCODE_W])
-            rect.y -= SPEED;
-        if (keystate[SDL_SCANCODE_S])
-            rect.y += SPEED;
-        if (keystate[SDL_SCANCODE_A])
-            rect.x -= SPEED;
-        if (keystate[SDL_SCANCODE_D])
-            rect.x += SPEED;
-        if (keystate[SDL_SCANCODE_ESCAPE])
-            running = false;
 
         // clear screen
         SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
         SDL_RenderClear(renderer);
 
-        // draw rectangle
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        SDL_RenderFillRect(renderer, &rect);
+        player.update();
+        player.draw();
 
         // present renderer
         SDL_RenderPresent(renderer);

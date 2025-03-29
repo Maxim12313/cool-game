@@ -1,2 +1,9 @@
-#define SCREEN_WIDTH = 1280
-#define SCREEN_HEIGHT = 720
+#ifndef CONFIG_H
+#define CONFIG_H
+
+namespace Config {
+constexpr int windowWidth = 1280;
+constexpr int windowHeight = 720;
+}; // namespace Config
+
+#endif

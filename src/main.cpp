@@ -1,11 +1,7 @@
 #include "../include/config.hpp"
 #include "../include/player.hpp"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_scancode.h>
+#include <SDL3/SDL.h>
 #include <iostream>
-#include <ranges>
 
 void cleanup(SDL_Renderer *renderer, SDL_Window *window) {
     SDL_DestroyRenderer(renderer);
@@ -30,9 +26,8 @@ int main() {
         return 1;
     }
 
-    SDL_Window *window = SDL_CreateWindow(
-        "SDL2 Game Loop", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        Config::windowWidth, Config::windowHeight, SDL_WINDOW_SHOWN);
+    SDL_Window *window = SDL_CreateWindow("Game Loop", Config::windowWidth,
+                                          Config::windowHeight, 0);
     if (!window) {
         std::cerr << "Window could not be created! SDL_Error: "
                   << SDL_GetError() << std::endl;
@@ -40,8 +35,7 @@ int main() {
         return 1;
     }
 
-    SDL_Renderer *renderer =
-        SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, nullptr);
     if (!renderer) {
         std::cerr << "Renderer could not be created! SDL_Error: "
                   << SDL_GetError() << std::endl;
@@ -58,11 +52,11 @@ int main() {
     while (running) {
         // handle events
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
+            if (event.type == SDL_EventType::SDL_EVENT_QUIT) {
                 running = false;
             }
-            if (event.type == SDL_KEYDOWN &&
-                event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+            if (event.type == SDL_EventType::SDL_EVENT_KEY_DOWN &&
+                event.key.scancode == SDL_SCANCODE_ESCAPE) {
                 running = false;
             }
         }

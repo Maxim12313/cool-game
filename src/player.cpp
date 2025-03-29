@@ -1,7 +1,7 @@
 #include "../include/player.hpp"
 #include "../include/config.hpp"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_render.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_render.h>
 
 Player::Player(int width, int height, int speed, SDL_Renderer *renderer,
                Color color)
@@ -12,9 +12,9 @@ Player::Player(int width, int height, int speed, SDL_Renderer *renderer,
 }
 
 void Player::update() {
-    const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+    const bool *keystate = SDL_GetKeyboardState(NULL);
 
-    SDL_Rect rect = getRect();
+    SDL_FRect rect = getRect();
     if (keystate[SDL_SCANCODE_W])
         rect.y -= speed;
     if (keystate[SDL_SCANCODE_S])

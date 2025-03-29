@@ -15,11 +15,9 @@ message(STATUS "Source files: ${SOURCE_FILES}")
 add_executable(app.exe src/main.cpp ${SOURCE_FILES})
 add_executable(game_tests.exe tests/main.cpp ${SOURCE_FILES})
 
-find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
-find_package(SDL2 REQUIRED CONFIG COMPONENTS SDL2main)
+find_package(SDL3 REQUIRED CONFIG COMPONENTS SDL3)
 
-# Link to the actual SDL2 library. SDL2::SDL2 is the shared SDL library, SDL2::SDL2-static is the static SDL libarary.
-target_link_libraries(app.exe PRIVATE SDL2::SDL2)
-target_link_libraries(game_tests.exe PRIVATE SDL2::SDL2)
+target_link_libraries(app.exe PRIVATE SDL3::SDL3)
+target_link_libraries(game_tests.exe PRIVATE SDL3::SDL3)
 
 

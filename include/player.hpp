@@ -2,8 +2,8 @@
 #define PLAYER_HPP
 #include "game_block.hpp"
 #include "structs.hpp"
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
+#include <SDL3/SDL_rect.h>
+#include <SDL3/SDL_render.h>
 
 class Player : public GameBlock {
 public:

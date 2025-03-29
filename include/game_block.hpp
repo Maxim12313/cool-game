@@ -2,8 +2,9 @@
 #define GAME_BLOCK_HPP
 
 #include "structs.hpp"
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
+#include <SDL3/SDL.h>
+#include <utility>
+
 class GameBlock {
 public:
     GameBlock(int x, int y, int width, int height, Color color,
@@ -18,14 +19,17 @@ public:
     inline int getWidth() const { return rect.w; }
     inline int getHeight() const { return rect.h; }
 
-    inline SDL_Rect getRect() const { return rect; }
-    inline void setRect(SDL_Rect rect) { std::swap(this->rect, rect); }
+    inline SDL_FRect getRect() const { return rect; }
+    inline void setRect(SDL_FRect rect) { std::swap(this->rect, rect); }
+    inline bool collide(GameBlock &other) {
+        return SDL_HasRectIntersectionFloat(&rect, &other.rect);
+    }
 
 private:
     int x, y;
     SDL_Renderer *renderer;
     Color color;
-    SDL_Rect rect;
+    SDL_FRect rect;
 };
 
 #endif

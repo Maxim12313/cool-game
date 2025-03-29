@@ -1,5 +1,5 @@
 #include "../include/game_block.hpp"
-#include <SDL2/SDL_render.h>
+#include <SDL3/SDL_render.h>
 
 GameBlock::GameBlock(int x, int y, int width, int height, Color color,
                      SDL_Renderer *renderer)

@@ -1,3 +1,4 @@
+#include "../include/chunk.hpp"
 #include "../include/config.hpp"
 #include "../include/player.hpp"
 #include <SDL3/SDL.h>
@@ -49,6 +50,17 @@ int main() {
     bool running = true;
     SDL_Event event;
 
+    Chunk chunk(0, 0);
+    for (int i = 0; i < 10; i++) {
+        Block *block =
+            new Block(Config::randInt(0, 1000), Config::randInt(0, 1000),
+                      Config::randInt(30, 300), Config::randInt(30, 300),
+                      Color(Config::randInt(0, 255), Config::randInt(0, 255),
+                            Config::randInt(0, 255)),
+                      renderer);
+        chunk.addBlock(block);
+    }
+
     while (running) {
         // handle events
         while (SDL_PollEvent(&event)) {
@@ -64,6 +76,7 @@ int main() {
         player.update();
 
         setBackground(renderer);
+        chunk.draw();
         player.draw();
 
         renderScreen(renderer);

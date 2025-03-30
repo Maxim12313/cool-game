@@ -5,34 +5,37 @@
 #include "structs.hpp"
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
+#include <functional>
 
 class Player : public Block {
 public:
-    Player(int width, int height, int speed, SDL_Renderer *renderer,
-           Color color)
+    Player(int width, int height, float speed, SDL_Renderer *renderer,
+           Color color, std::function<void(Vector2)> moveCallback)
         : Block(Config::windowWidth / 2 - width / 2,
                 Config::windowHeight / 2 - height / 2, width, height, color,
                 renderer),
-          speed(speed) {}
+          moveCallback(moveCallback), speed(speed) {}
 
     void update() {
         const bool *keystate = SDL_GetKeyboardState(NULL);
 
-        SDL_FRect rect = getRect();
+        Vector2 change;
         if (keystate[SDL_SCANCODE_W])
-            rect.y -= speed;
+            change.y += 1;
         if (keystate[SDL_SCANCODE_S])
-            rect.y += speed;
+            change.y -= 1;
         if (keystate[SDL_SCANCODE_A])
-            rect.x -= speed;
+            change.x += 1;
         if (keystate[SDL_SCANCODE_D])
-            rect.x += speed;
+            change.x -= 1;
 
-        setRect(rect);
+        change = change.normalized() * speed;
+        moveCallback(change);
     }
 
 private:
-    int speed;
+    float speed;
+    std::function<void(Vector2)> moveCallback;
 };
 
 #endif

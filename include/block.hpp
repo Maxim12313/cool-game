@@ -4,38 +4,30 @@
 #include "game_object.hpp"
 #include "structs.hpp"
 #include <SDL3/SDL.h>
+#include <iostream>
 #include <utility>
 
 class Block : public GameObject {
 public:
     Block(int x, int y, int width, int height, Color color,
           SDL_Renderer *renderer)
-        : x(x), y(y), color(color), renderer(renderer),
-          rect(x, y, width, height) {}
+        : GameObject(x, y), width(width), height(height), color(color),
+          renderer(renderer) {}
 
     virtual void update() {}
 
-    inline void draw() const {
+    void draw(int offX, int offY) const {
+        SDL_FRect rect = SDL_FRect(offX + pos.x, offY + pos.y, width, height);
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderFillRect(renderer, &rect);
     }
 
-    inline int getX() const { return x; }
-    inline int getY() const { return y; }
-    inline int getWidth() const { return rect.w; }
-    inline int getHeight() const { return rect.h; }
-
-    inline SDL_FRect getRect() const { return rect; }
-    inline void setRect(SDL_FRect rect) { std::swap(this->rect, rect); }
-    inline bool collide(Block &other) {
-        return SDL_HasRectIntersectionFloat(&rect, &other.rect);
-    }
+public:
+    int width, height;
 
 private:
-    int x, y;
-    SDL_Renderer *renderer;
     Color color;
-    SDL_FRect rect;
+    SDL_Renderer *renderer;
 };
 
 #endif

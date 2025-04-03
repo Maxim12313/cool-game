@@ -11,13 +11,12 @@ template <typename T> class ComponentArray {
 public:
     ComponentArray() : usedLength(0) {}
 
-    void insert(Entity ent, T component) {
+    void insert(Entity ent, T &&component) {
         assert(ent < MAX_ENTITIES && "entity outside bounds");
         assert(!entToIdx.count(ent) && "entity component already exists");
 
         // forwarding, copies if lvalue reference and moves if temporary rvalue
-        // data[usedLength] = std::forward<T>(component);
-        data[usedLength] = component;
+        data[usedLength] = std::forward<T>(component);
         entToIdx[ent] = usedLength;
         idxToEnt[usedLength] = ent;
         usedLength++;

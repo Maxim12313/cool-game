@@ -4,6 +4,9 @@
 
 using std::cout;
 
+void testEntityManager();
+void testComponentArray();
+
 int main() {
 }
 

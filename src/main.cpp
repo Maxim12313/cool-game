@@ -1,4 +1,3 @@
-#include "../include/config.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_oldnames.h>
 #include <SDL3/SDL_render.h>
@@ -11,7 +10,7 @@ void setBackground(SDL_Renderer *renderer) {
 
 void renderScreen(SDL_Renderer *renderer) {
     SDL_RenderPresent(renderer);
-    SDL_Delay(Config::fpsDelay);
+    SDL_Delay(16);
 }
 
 void cleanup(SDL_Renderer *renderer, SDL_Window *window) {
@@ -27,8 +26,7 @@ int main() {
         exit(1);
     }
 
-    SDL_Window *window = SDL_CreateWindow("Game Loop", Config::windowWidth,
-                                          Config::windowHeight, 0);
+    SDL_Window *window = SDL_CreateWindow("Game Loop", 1280, 720, 0);
     if (!window) {
         std::cerr << "Window could not be created! SDL_Error: "
                   << SDL_GetError() << std::endl;

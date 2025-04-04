@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <stack>
 
+// manages entities by giving valid ids and storing signatures for active
+// components per entity
 class EntityManager {
 public:
     EntityManager() {

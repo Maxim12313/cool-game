@@ -6,8 +6,10 @@
 #include <cstdint>
 #include <unordered_map>
 
-// for each component data type
-template <typename T> class ComponentArray {
+// for each component data type, efficient way to store data only for entities
+// that use it
+template <typename T>
+class ComponentArray {
 public:
     ComponentArray() : usedLength(0) {}
 

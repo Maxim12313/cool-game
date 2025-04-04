@@ -1,6 +1,10 @@
 #include "../include/component_array.hpp"
 #include "../include/entity_manager.hpp"
+#include "../include/structs.hpp"
+#include <cstdint>
 #include <iostream>
+#include <string>
+#include <typeindex>
 
 using std::cout;
 
@@ -8,6 +12,14 @@ void testEntityManager();
 void testComponentArray();
 
 int main() {
+    std::unordered_map<std::type_index, std::string> map;
+    auto key = std::type_index(typeid(int));
+    map[key] = "int";
+    map[std::type_index(typeid(Transform))] = "transform";
+    map[std::type_index(typeid(std::string))] = "string";
+    for (auto [key, val] : map) {
+        cout << key.name() << " " << val << "\n";
+    }
 }
 
 void testComponentArray() {

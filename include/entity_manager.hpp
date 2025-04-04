@@ -14,7 +14,7 @@ public:
     }
 
     Entity createEntity() {
-        assert(countEntity() < MAX_ENTITIES && "too many entities\n");
+        assert(countEntity() < MAX_ENTITIES && "too many entities");
         Entity ent = availableEnts.top();
         availableEnts.pop();
         used[ent] = 1;
@@ -22,7 +22,7 @@ public:
     }
 
     void destroyEntity(Entity ent) {
-        assert(ent < MAX_ENTITIES && "entity out of range\n");
+        assert(ent < MAX_ENTITIES && "entity out of range");
         assert(isUsed(ent) && "entity is mising");
         signatures[ent].reset();
         used[ent] = 0;
@@ -30,13 +30,13 @@ public:
     }
 
     Signature getSignature(Entity ent) const {
-        assert(ent < MAX_ENTITIES && "entity out of range\n");
+        assert(ent < MAX_ENTITIES && "entity out of range");
         assert(isUsed(ent) && "entity is missing");
         return signatures[ent];
     }
 
     void setSignature(Entity ent, Signature signature) {
-        assert(ent < MAX_ENTITIES && "entity out of range\n");
+        assert(ent < MAX_ENTITIES && "entity out of range");
         assert(isUsed(ent) && "entity is missing");
         signatures[ent] = signature;
     }

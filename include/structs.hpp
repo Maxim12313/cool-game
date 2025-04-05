@@ -1,8 +1,10 @@
 #ifndef STRUCTS_HPP
 #define STRUCTS_HPP
 #include "vec2.hpp"
+#include <SDL3/SDL.h>
 #include <bitset>
 #include <cstdint>
+#include <memory>
 #include <set>
 
 using Entity = std::uint32_t;

@@ -1,8 +1,10 @@
 #include "../include/component_array.hpp"
 #include "../include/component_manager.hpp"
+#include "../include/context.hpp"
 #include "../include/entity_manager.hpp"
 #include "../include/structs.hpp"
 #include <cstdint>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -15,6 +17,7 @@ void testComponentArray();
 void testComponentManager();
 
 int main() {
+    Context context;
 }
 
 void testComponentManager() {

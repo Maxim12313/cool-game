@@ -1,7 +1,25 @@
+#include "../include/structs.hpp"
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_oldnames.h>
 #include <SDL3/SDL_render.h>
 #include <iostream>
+
+void setBackground(SDL_Renderer *renderer);
+void renderScreen(SDL_Renderer *renderer);
+void cleanup(SDL_Renderer *renderer, SDL_Window *window);
+bool input();
+
+int main() {
+
+    // auto p = init();
+    // SDL_Window *window = p.window.get();
+    // SDL_Renderer *renderer = p.renderer.get();
+    //
+    // while (input()) {
+    //     setBackground(renderer);
+    //     renderScreen(renderer);
+    // }
+    // cleanup(renderer, window);
+}
 
 void setBackground(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
@@ -19,44 +37,16 @@ void cleanup(SDL_Renderer *renderer, SDL_Window *window) {
     SDL_Quit();
 }
 
-int main() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError()
-                  << std::endl;
-        exit(1);
-    }
-
-    SDL_Window *window = SDL_CreateWindow("Game Loop", 1280, 720, 0);
-    if (!window) {
-        std::cerr << "Window could not be created! SDL_Error: "
-                  << SDL_GetError() << std::endl;
-        SDL_Quit();
-        exit(1);
-    }
-
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, nullptr);
-    if (!renderer) {
-        std::cerr << "Renderer could not be created! SDL_Error: "
-                  << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        exit(1);
-    }
-
-    bool running = true;
+bool input() {
     SDL_Event event;
-    while (running) {
-        setBackground(renderer);
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_EVENT_QUIT) {
-                running = false;
-            }
-            if (event.type == SDL_EVENT_KEY_DOWN &&
-                event.key.scancode == SDL_SCANCODE_ESCAPE) {
-                running = false;
-            }
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_EVENT_QUIT) {
+            return false;
         }
-        renderScreen(renderer);
+        if (event.type == SDL_EVENT_KEY_DOWN &&
+            event.key.scancode == SDL_SCANCODE_ESCAPE) {
+            return false;
+        }
     }
-    cleanup(renderer, window);
+    return true;
 }

@@ -15,5 +15,9 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 struct Transform {
     Vec2 position;
 };
+struct RigidBody {
+    Vec2 velocity;
+    Vec2 acceleration;
+};
 
 #endif

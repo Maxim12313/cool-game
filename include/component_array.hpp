@@ -6,19 +6,21 @@
 #include <cstdint>
 #include <unordered_map>
 
+class IComponentArray {};
+
 // for each component data type, efficient way to store data only for entities
 // that use it
 template <typename T>
-class ComponentArray {
+class ComponentArray : public IComponentArray {
 public:
     ComponentArray() : usedLength(0) {}
 
-    void insert(Entity ent, T &&component) {
+    void insert(Entity ent, T component) {
         assert(ent < MAX_ENTITIES && "entity outside bounds");
         assert(!entToIdx.count(ent) && "entity component already exists");
 
-        // forwarding, copies if lvalue reference and moves if temporary rvalue
-        data[usedLength] = std::forward<T>(component);
+        // TODO: was here
+        data[usedLength] = component;
         entToIdx[ent] = usedLength;
         idxToEnt[usedLength] = ent;
         usedLength++;
@@ -44,7 +46,7 @@ public:
         usedLength--;
     }
 
-    T &operator[](Entity ent) {
+    T &get(Entity ent) {
         assert(ent < MAX_ENTITIES && "entity outside bounds");
         assert(entToIdx.count(ent) && "entity is missing");
         return data[entToIdx[ent]];

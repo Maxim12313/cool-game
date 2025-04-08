@@ -2,6 +2,7 @@
 #define SYSTEM_MANAGER_HPP
 
 #include "structs.hpp"
+#include "systems.hpp"
 #include <cassert>
 #include <memory>
 #include <typeindex>

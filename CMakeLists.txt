@@ -11,7 +11,6 @@ list(REMOVE_ITEM SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 
 message(STATUS "Source files: ${SOURCE_FILES}")
 
-
 add_executable(app.exe src/main.cpp ${SOURCE_FILES})
 add_executable(game_tests.exe tests/main.cpp ${SOURCE_FILES})
 
@@ -20,4 +19,4 @@ find_package(SDL3 REQUIRED CONFIG COMPONENTS SDL3)
 target_link_libraries(app.exe PRIVATE SDL3::SDL3)
 target_link_libraries(game_tests.exe PRIVATE SDL3::SDL3)
 
-
+target_include_directories(game_tests.exe PRIVATE ${CMAKE_SOURCE_DIR}/tests)

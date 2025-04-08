@@ -3,6 +3,7 @@
 *.dSYM/
 *.a
 *.zip
+*.out*
 
 CMakeCache.txt
 CMakeFiles/

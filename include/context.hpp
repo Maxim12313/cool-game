@@ -24,7 +24,7 @@ public:
         }
 
         window = std::unique_ptr<SDL_Window, DeleteWindow>(
-            SDL_CreateWindow("Game Loop", 1280, 720, 0), DeleteWindow());
+            SDL_CreateWindow("Game Loop", 1280, 1280, 0), DeleteWindow());
 
         if (!window) {
             std::cerr << "Window could not be created! SDL_Error: "
@@ -40,9 +40,12 @@ public:
         }
     }
 
+    SDL_Window *getWindow() const { return window.get(); }
+    SDL_Renderer *getRenderer() const { return renderer.get(); }
+
     ~Context() { SDL_Quit(); }
 
-public:
+private:
     // NOTE: must declare renderer after window so cleaned up before window
     std::unique_ptr<SDL_Window, DeleteWindow> window;
     std::unique_ptr<SDL_Renderer, DeleteRenderer> renderer;

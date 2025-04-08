@@ -1,4 +1,6 @@
+#include "../include/context.hpp"
 #include "../include/structs.hpp"
+#include "../include/voxel.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_render.h>
 #include <iostream>
@@ -9,16 +11,22 @@ void cleanup(SDL_Renderer *renderer, SDL_Window *window);
 bool input();
 
 int main() {
+    Context context;
+    SDL_Renderer *renderer = context.getRenderer();
+    SDL_Window *window = context.getWindow();
 
-    // auto p = init();
-    // SDL_Window *window = p.window.get();
-    // SDL_Renderer *renderer = p.renderer.get();
-    //
-    // while (input()) {
-    //     setBackground(renderer);
-    //     renderScreen(renderer);
-    // }
-    // cleanup(renderer, window);
+    VoxelRegion region;
+    region.readFromInput();
+    ActiveVoxelChunks active;
+    for (VoxelChunk &chunk : region.chunks) {
+        active.chunks.push_back(chunk);
+    }
+
+    while (input()) {
+        setBackground(renderer);
+        active.draw(renderer);
+        renderScreen(renderer);
+    }
 }
 
 void setBackground(SDL_Renderer *renderer) {
@@ -29,12 +37,6 @@ void setBackground(SDL_Renderer *renderer) {
 void renderScreen(SDL_Renderer *renderer) {
     SDL_RenderPresent(renderer);
     SDL_Delay(16);
-}
-
-void cleanup(SDL_Renderer *renderer, SDL_Window *window) {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
 }
 
 bool input() {

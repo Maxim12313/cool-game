@@ -1,11 +1,8 @@
 #ifndef STRUCTS_HPP
 #define STRUCTS_HPP
-#include "vec2.hpp"
 #include <SDL3/SDL.h>
 #include <bitset>
 #include <cstdint>
-#include <memory>
-#include <set>
 
 using Entity = std::uint32_t;
 const Entity MAX_ENTITIES = 5000;
@@ -15,17 +12,13 @@ const Component MAX_COMPONENTS = 32;
 
 using Signature = std::bitset<MAX_COMPONENTS>;
 
-class System {
-public:
-    std::set<int> entities;
-};
+const float VOXEL_LENGTH = 50;
+const size_t CHUNK_LENGTH = 15;
+const size_t REGION_LENGTH = 20;
+const size_t MAX_ACTIVE_VOXELS = 1000;
 
-struct Transform {
-    Vec2 position;
-};
-struct RigidBody {
-    Vec2 velocity;
-    Vec2 acceleration;
+struct Color {
+    int r, g, b, a;
 };
 
 #endif

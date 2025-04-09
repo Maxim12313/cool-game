@@ -1,3 +1,4 @@
+#include "bitops.hpp"
 #include "structs.hpp"
 #include <array>
 #include <cassert>
@@ -26,7 +27,7 @@ public:
     void destroyEntity(Entity ent) {
         assert(ent < MAX_ENTITIES && "entity out of range");
         assert(isUsed(ent) && "entity is mising");
-        signatures[ent].reset();
+        signatures[ent] = 0;
         used[ent] = 0;
         availableEnts.push(ent);
     }
@@ -41,6 +42,18 @@ public:
         assert(ent < MAX_ENTITIES && "entity out of range");
         assert(isUsed(ent) && "entity is missing");
         signatures[ent] = signature;
+    }
+
+    void addComponent(Entity ent, Component component) {
+        assert(ent < MAX_ENTITIES && "entity out of range");
+        assert(isUsed(ent) && "entity is missing");
+        signatures[ent] = setIthBit(signatures[ent], component);
+    }
+
+    void removeComponent(Entity ent, Component component) {
+        assert(ent < MAX_ENTITIES && "entity out of range");
+        assert(isUsed(ent) && "entity is missing");
+        signatures[ent] = unsetIthBit(signatures[ent], component);
     }
 
     bool isUsed(Entity ent) const { return used[ent]; }

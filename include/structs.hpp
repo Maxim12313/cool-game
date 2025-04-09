@@ -10,7 +10,8 @@ const Entity MAX_ENTITIES = 5000;
 using Component = std::uint8_t;
 const Component MAX_COMPONENTS = 32;
 
-using Signature = std::bitset<MAX_COMPONENTS>;
+// TODO: must ensure can hold all components
+using Signature = std::uint32_t;
 
 const float VOXEL_LENGTH = 50;
 const size_t CHUNK_LENGTH = 15;

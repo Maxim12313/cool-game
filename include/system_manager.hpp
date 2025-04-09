@@ -12,11 +12,10 @@ class SystemManager {
 public:
     template <typename T>
     T &registerSystem(Signature &signature) {
-        auto idx = std::type_index(typeid(T));
-        assert(!systems.count(idx) && "system already registered");
-        Data data(std::unique_ptr<T>());
-        systems[idx] = data;
-        return data.system;
+        auto key = std::type_index(typeid(T));
+        assert(!systems.count(key) && "system already registered");
+        systems.emplace(key, Data{std::make_unique<T>(), signature});
+        return systems[key].signature;
     }
 
     void checkAddEntity(Entity ent, Signature signature) {

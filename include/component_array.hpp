@@ -19,7 +19,6 @@ public:
         assert(ent < MAX_ENTITIES && "entity outside bounds");
         assert(!entToIdx.count(ent) && "entity component already exists");
 
-        // TODO: was here
         data[usedLength] = component;
         entToIdx[ent] = usedLength;
         idxToEnt[usedLength] = ent;

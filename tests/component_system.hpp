@@ -1,3 +1,4 @@
+#include "../include/bitops.hpp"
 #include "../include/component_array.hpp"
 #include "../include/component_manager.hpp"
 #include "../include/components.hpp"
@@ -63,12 +64,14 @@ void testEntityManager() {
     printf("entity number: %d\n", ent);
     Signature sig = entManager.getSignature(ent);
     cout << "signature " << sig << "\n";
-    sig.flip(2);
+    // sig.flip(2);
+    sig = setIthBit(sig, 2);
     entManager.setSignature(ent, sig);
     sig = entManager.getSignature(ent);
     cout << "signature " << sig << "\n";
     Entity ent2 = entManager.createEntity();
-    sig.flip(3);
+    // sig.flip(3);
+    sig = setIthBit(sig, 3);
     entManager.setSignature(ent2, sig);
     cout << "signature " << sig << "\n";
     entManager.destroyEntity(ent);

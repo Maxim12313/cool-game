@@ -19,6 +19,23 @@ struct VoxelChunk {
     std::vector<Voxel> voxels;
 
     VoxelChunk() : voxels(CHUNK_LENGTH * CHUNK_LENGTH) {}
+    void readInput(int x1, int y1, int n, int m,
+                   std::vector<std::string> &grid) {
+        pos = Vec2(x1 * VOXEL_LENGTH, y1 * VOXEL_LENGTH);
+        int idx = 0;
+        for (int y2 = 0; y2 < CHUNK_LENGTH; y2++) {
+            for (int x2 = 0; x2 < CHUNK_LENGTH; x2++) {
+                int x = x1 + x2;
+                int y = y1 + y2;
+                if (y < n && x < m) {
+                    bool show = grid[y][x] != '.';
+                    voxels[idx] = Voxel(show);
+                }
+                idx++;
+            }
+        }
+    }
+
     size_t addDraw(SDL_FRect *rects, size_t offsetIdx) {
         size_t curr = 0;
         float posY = pos.y;
@@ -55,22 +72,8 @@ struct VoxelRegion {
 
         for (int y1 = 0; y1 < n; y1 += CHUNK_LENGTH) {
             for (int x1 = 0; x1 < m; x1 += CHUNK_LENGTH) {
-                VoxelChunk curr;
-                curr.pos = Vec2(x1 * VOXEL_LENGTH, y1 * VOXEL_LENGTH);
-                std::vector<Voxel> &voxels = curr.voxels;
-                int idx = 0;
-                for (int y2 = 0; y2 < CHUNK_LENGTH; y2++) {
-                    for (int x2 = 0; x2 < CHUNK_LENGTH; x2++) {
-                        int x = x1 + x2;
-                        int y = y1 + y2;
-                        if (y < n && x < m) {
-                            bool show = grid[y][x] != '.';
-                            voxels[idx] = Voxel(show);
-                        }
-                        idx++;
-                    }
-                }
-                chunks.push_back(curr);
+                chunks.emplace_back();
+                chunks.back().readInput(x1, y1, n, m, grid);
             }
         }
     }

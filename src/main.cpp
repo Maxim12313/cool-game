@@ -1,5 +1,9 @@
+#include "../include/component_manager.hpp"
 #include "../include/context.hpp"
+#include "../include/entity_manager.hpp"
 #include "../include/structs.hpp"
+#include "../include/system_manager.hpp"
+#include "../include/systems.hpp"
 #include "../include/voxel.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_render.h>
@@ -21,6 +25,11 @@ int main() {
     for (VoxelChunk &chunk : region.chunks) {
         active.chunks.push_back(chunk);
     }
+
+    EntityManager entityManager;
+    ComponentManager componentManager;
+
+    Entity player = entityManager.createEntity();
 
     while (input()) {
         setBackground(renderer);

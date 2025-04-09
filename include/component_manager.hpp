@@ -12,14 +12,16 @@ public:
     template <typename T>
     void registerComponent() {
         auto key = std::type_index(typeid(T));
-        assert(!componentArrays.count(key) && "component already registered");
-        componentArrays.emplace(key, std::make_unique<ComponentArray<T>>());
+        assert(!components.count(key) && "component already registered");
+
+        components.emplace(key, Data{std::make_unique<ComponentArray<T>>(),
+                                     Component(components.size())});
     }
 
     template <typename T>
     void erase(Entity ent) {
         auto key = std::type_index(typeid(T));
-        assert(componentArrays.count(key) && "component not registered");
+        assert(components.count(key) && "component not registered");
         ComponentArray<T> *ptr = getComponentArray<T>();
         ptr->erase(ent);
     }
@@ -27,7 +29,7 @@ public:
     template <typename T>
     void insert(Entity ent, T component) {
         auto key = std::type_index(typeid(T));
-        assert(componentArrays.count(key) && "component not registered");
+        assert(components.count(key) && "component not registered");
         ComponentArray<T> *ptr = getComponentArray<T>();
         ptr->insert(ent, component);
     }
@@ -35,22 +37,33 @@ public:
     template <typename T>
     T &get(Entity ent) {
         auto key = std::type_index(typeid(T));
-        assert(componentArrays.count(key) && "component not registered");
+        assert(components.count(key) && "component not registered");
         ComponentArray<T> *ptr = getComponentArray<T>();
         return ptr->get(ent);
+    }
+
+    template <typename T>
+    Component getComponentType(T component) {
+        auto key = std::type_index(typeid(T));
+        assert(components.count(key) && "component not registered");
+        return components[key].type;
     }
 
 private:
     template <typename T>
     ComponentArray<T> *getComponentArray() {
         auto key = std::type_index(typeid(T));
-        assert(componentArrays.count(key) && "component not registered");
-        return static_cast<ComponentArray<T> *>(componentArrays[key].get());
+        assert(components.count(key) && "component not registered");
+        return static_cast<ComponentArray<T> *>(components[key].array.get());
     }
 
 private:
-    std::unordered_map<std::type_index, std::unique_ptr<IComponentArray>>
-        componentArrays;
+    struct Data {
+        std::unique_ptr<IComponentArray> array;
+        Component type;
+    };
+
+    std::unordered_map<std::type_index, Data> components;
 };
 
 #endif

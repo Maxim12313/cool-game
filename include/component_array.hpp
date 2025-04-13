@@ -6,7 +6,10 @@
 #include <cstdint>
 #include <unordered_map>
 
-class IComponentArray {};
+class IComponentArray {
+public:
+    virtual ~IComponentArray() = default;
+};
 
 // for each component data type, efficient way to store data only for entities
 // that use it

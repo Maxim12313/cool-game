@@ -1,4 +1,6 @@
 #include "component_system.hpp"
 int main() {
-    testComponentArray();
+    // testComponentArray();
+    // testEntityManager();
+    testComponentManager();
 }

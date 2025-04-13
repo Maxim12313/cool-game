@@ -19,7 +19,7 @@ struct VoxelChunk {
     std::vector<Voxel> voxels;
 
     VoxelChunk() : voxels(CHUNK_LENGTH * CHUNK_LENGTH) {}
-    void readInput(int x1, int y1, int n, int m,
+    void readInput(int x1, int y1, size_t n, size_t m,
                    std::vector<std::string> &grid) {
         pos = Vec2(x1 * VOXEL_LENGTH, y1 * VOXEL_LENGTH);
         int idx = 0;
@@ -88,7 +88,7 @@ struct ActiveVoxelChunks {
             count = chunk.addDraw(rects, count);
         }
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-        SDL_RenderFillRects(renderer, rects, count);
+        SDL_RenderFillRects(renderer, rects, int(count));
     }
 };
 

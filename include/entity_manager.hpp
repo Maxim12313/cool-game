@@ -58,7 +58,9 @@ public:
 
     bool isUsed(Entity ent) const { return used[ent]; }
 
-    uint32_t countEntity() const { return MAX_ENTITIES - availableEnts.size(); }
+    uint32_t countEntity() const {
+        return uint32_t(MAX_ENTITIES - availableEnts.size());
+    }
 
 private:
     std::stack<Entity> availableEnts;

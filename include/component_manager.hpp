@@ -3,6 +3,7 @@
 #include "component_array.hpp"
 #include "structs.hpp"
 #include <cassert>
+#include <iostream>
 #include <memory>
 #include <typeindex>
 
@@ -13,9 +14,9 @@ public:
     void registerComponent() {
         auto key = std::type_index(typeid(T));
         assert(!components.count(key) && "component already registered");
-
-        components.emplace(key, Data{std::make_unique<ComponentArray<T>>(),
-                                     Component(components.size())});
+        Data data(std::make_unique<ComponentArray<T>>(),
+                  Component(components.size()));
+        components[key] = std::move(data);
     }
 
     template <typename T>

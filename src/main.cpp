@@ -1,9 +1,9 @@
-#include "../include/component_manager.hpp"
 #include "../include/context.hpp"
-#include "../include/entity_manager.hpp"
+#include "../include/ecs/component_manager.hpp"
+#include "../include/ecs/entity_manager.hpp"
+#include "../include/ecs/system_manager.hpp"
+#include "../include/ecs/systems.hpp"
 #include "../include/structs.hpp"
-#include "../include/system_manager.hpp"
-#include "../include/systems.hpp"
 #include "../include/voxel.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_render.h>

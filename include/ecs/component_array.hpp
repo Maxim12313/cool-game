@@ -1,7 +1,7 @@
 #ifndef COMPONENT_ARRAY_HPP
 #define COMPONENT_ARRAY_HPP
+#include "../structs.hpp"
 #include "array"
-#include "structs.hpp"
 #include <cassert>
 #include <cstdint>
 #include <unordered_map>

@@ -1,7 +1,7 @@
 #ifndef COMPONENT_MANAGER_HPP
 #define COMPONENT_MANAGER_HPP
+#include "../structs.hpp"
 #include "component_array.hpp"
-#include "structs.hpp"
 #include <cassert>
 #include <iostream>
 #include <memory>

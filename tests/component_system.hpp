@@ -1,9 +1,9 @@
 #include "../include/bitops.hpp"
-#include "../include/component_array.hpp"
-#include "../include/component_manager.hpp"
-#include "../include/components.hpp"
 #include "../include/context.hpp"
-#include "../include/entity_manager.hpp"
+#include "../include/ecs/component_array.hpp"
+#include "../include/ecs/component_manager.hpp"
+#include "../include/ecs/components.hpp"
+#include "../include/ecs/entity_manager.hpp"
 #include "../include/structs.hpp"
 #include <iostream>
 

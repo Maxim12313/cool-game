@@ -1,5 +1,5 @@
-#include "bitops.hpp"
-#include "structs.hpp"
+#include "../bitops.hpp"
+#include "../structs.hpp"
 #include <array>
 #include <cassert>
 #include <cstdint>

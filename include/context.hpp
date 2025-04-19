@@ -1,5 +1,6 @@
 #ifndef CONTEXT_HPP
 #define CONTEXT_HPP
+#include "structs.hpp"
 #include <SDL3/SDL.h>
 #include <iostream>
 #include <memory>
@@ -24,7 +25,8 @@ public:
         }
 
         window = std::unique_ptr<SDL_Window, DeleteWindow>(
-            SDL_CreateWindow("Game Loop", 1280, 1280, 0), DeleteWindow());
+            SDL_CreateWindow("Game Loop", WINDOW_WIDTH, WINDOW_HEIGHT, 0),
+            DeleteWindow());
 
         if (!window) {
             std::cerr << "Window could not be created! SDL_Error: "

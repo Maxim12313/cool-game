@@ -2,6 +2,7 @@
 #define VEC_HPP
 
 #include <cmath>
+#include <strstream>
 
 class Vec2 {
 public:
@@ -13,5 +14,9 @@ public:
     Vec2 operator*(float scalar) const { return Vec2(x * scalar, y * scalar); }
     float magnitude() const { return std::sqrt(x * x + y * y); }
 };
+
+std::string to_string(Vec2 vec) {
+    return std::to_string(vec.x) + " " + std::to_string(vec.y);
+}
 
 #endif

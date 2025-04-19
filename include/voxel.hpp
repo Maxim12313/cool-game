@@ -36,11 +36,11 @@ struct VoxelChunk {
         }
     }
 
-    size_t addDraw(SDL_FRect *rects, size_t offsetIdx) {
+    size_t addDraw(SDL_FRect *rects, size_t offsetIdx, Vec2 offsetPos) {
         size_t curr = 0;
-        float posY = pos.y;
+        float posY = pos.y - offsetPos.y;
         for (int y = 0; y < CHUNK_LENGTH; y++) {
-            float posX = pos.x;
+            float posX = pos.x - offsetPos.x;
             for (int x = 0; x < CHUNK_LENGTH; x++) {
                 if (voxels[curr].active) {
                     rects[offsetIdx] =
@@ -76,19 +76,6 @@ struct VoxelRegion {
                 chunks.back().readInput(x1, y1, n, m, grid);
             }
         }
-    }
-};
-
-struct ActiveVoxelChunks {
-    std::vector<VoxelChunk> chunks;
-    void draw(SDL_Renderer *renderer) {
-        SDL_FRect rects[MAX_ACTIVE_VOXELS];
-        size_t count = 0;
-        for (VoxelChunk &chunk : chunks) {
-            count = chunk.addDraw(rects, count);
-        }
-        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-        SDL_RenderFillRects(renderer, rects, int(count));
     }
 };
 

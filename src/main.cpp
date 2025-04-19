@@ -1,10 +1,7 @@
 #include "../include/context.hpp"
-#include "../include/ecs/component_manager.hpp"
-#include "../include/ecs/entity_manager.hpp"
-#include "../include/ecs/system_manager.hpp"
-#include "../include/ecs/systems.hpp"
+#include "../include/player.hpp"
 #include "../include/structs.hpp"
-#include "../include/voxel.hpp"
+#include "../include/voxel_system.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_render.h>
 #include <iostream>
@@ -19,21 +16,14 @@ int main() {
     SDL_Renderer *renderer = context.getRenderer();
     SDL_Window *window = context.getWindow();
 
-    VoxelRegion region;
-    region.readFromInput();
-    ActiveVoxelChunks active;
-    for (VoxelChunk &chunk : region.chunks) {
-        active.chunks.push_back(chunk);
-    }
-
-    EntityManager entityManager;
-    ComponentManager componentManager;
-
-    Entity player = entityManager.createEntity();
+    VoxelSystem voxelSystem;
+    Player player;
 
     while (input()) {
         setBackground(renderer);
-        active.draw(renderer);
+        player.handleInput();
+        voxelSystem.draw(player.pos, renderer);
+        player.draw(renderer);
         renderScreen(renderer);
     }
 }
